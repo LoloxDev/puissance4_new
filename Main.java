@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
@@ -19,7 +21,9 @@ public class Main {
     static int[][] board=new int[COL_SIZE][ROW_SIZE];
 
     public static void main(String[] args) {
-
+        //initialisation du jeu
+        String[] joueur = initDuJeu();
+        tourDeJeu(joueur);
         //board[3] = new int[]{0,1,1,1,1,1};
         System.out.println(Arrays.toString(placementJeton(3,1)));
 
@@ -38,4 +42,57 @@ public class Main {
         }
         return placeTrouve;
     }
+
+
+
+    //
+    static String[] initDuJeu() {
+        Scanner clavier = new Scanner(System.in);
+        System.out.println("Veuillez saisir le nom du joueur 1");
+        String joueur1 = clavier.next();
+        System.out.println("Veuillez saisir le nom du joueur 2");
+        String joueur2 = clavier.next();
+        String[] joueurs = {joueur1,joueur2};
+        Random random = new Random();
+        int max = 2;
+
+        int value = random.nextInt(max);
+
+        if(value == 0){
+            System.out.println("C'est " + joueurs[0]+ " qui commence");
+            return joueurs;
+        }else{
+            System.out.println("C'est " +joueurs[1]+ "qui commence");
+            return joueurs;
+        }
+    }
+
+    static boolean tourDeJeu(String[] joueurs){
+        int tour = 0;
+        do{
+            if(tour%2 == 0){
+                System.out.println("C'est le tour du " + joueurs[0]);
+                affichageGrill();
+                tour++;
+            }else{
+                System.out.println("C'est le tour du " + joueurs[1]);
+                affichageGrill();
+                tour++;
+            }
+        }while(tour != 15);
+        return true;
+    }
+    static void affichageGrill(){
+        int [][]grid = new int[6][7];
+        for(int i = 0; i < 6; i++)
+        {
+            for(int j = 0; j < 7; j++)
+            {
+                System.out.printf("%2d ", grid[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+
 }
