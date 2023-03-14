@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -53,18 +52,20 @@ public class Main {
         System.out.println("Veuillez saisir le nom du joueur 2");
         String joueur2 = clavier.next();
         String[] joueurs = {joueur1,joueur2};
-        Random random = new Random();
-        int max = 2;
 
-        int value = random.nextInt(max);
+        int whoStart = (Math.random() <= 0.5) ? 1 : 2;
+        System.out.println("C'est " + joueurs[whoStart]+ " qui commence");  //<-- ++ opti
+        return joueurs;
 
-        if(value == 0){
-            System.out.println("C'est " + joueurs[0]+ " qui commence");
-            return joueurs;
-        }else{
-            System.out.println("C'est " +joueurs[1]+ "qui commence");
-            return joueurs;
-        }
+        //switch(whoStart){
+        //case 1:
+        //    System.out.println("C'est " + joueurs[0]+ " qui commence");
+        //    break;
+        //                                                                    //<-- + opti
+        //case 2:
+        //    System.out.println("C'est " + joueurs[1] + "qui commence");
+        //    break;
+        //}
     }
 
     static boolean tourDeJeu(String[] joueurs){
