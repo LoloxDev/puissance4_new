@@ -98,10 +98,15 @@ public class Main {
     public static void verifVictoire(int posX, int posY, int nmDuJoueur){
 
 
-        // Ici on calcule l'axe Y via méthode 1 : boucle for
+
         int winX = 1;
         int winY = 1;
+        int winDiagX = 1;
+        int winDiagY = 1;
+        int pointeurX = posX;
+        int pointeurY = posY;
 
+        // Ici on calcule l'axe Y via méthode 1 : boucle for
         for(int i=posY+1; i <= 5 ; i++){
             if(board[posX][i] == nmDuJoueur){
                 winY++;
@@ -112,35 +117,94 @@ public class Main {
 
         // Ici on caclcule l'axe X vers la droite via méthode 2 : boucle while
         boolean boucle = true;
+        while (pointeurX < 6 && boucle){
 
-        while (posX < 6 && boucle){
-
-            if(board[(posX+1)][posY] == nmDuJoueur){
+            if(board[(pointeurX+1)][posY] == nmDuJoueur){
                 winX++;
             } else {
                    boucle = false;
             }
-            posX++;
+            pointeurX++;
         }
 
         // Puis vers la gauche
+        pointeurX = posX;
+        while (pointeurX > 0){
 
-        while (posX > 0){
-
-            if(board[(posX-1)][posY] == nmDuJoueur){
+            if(board[(pointeurX-1)][posY] == nmDuJoueur){
                 winX++;
             } else {
                 break; // On peux utiliser break pour éviter la variable boucle.
             }
-            posX--;
+            pointeurX--;
         }
 
-        youWin(winX, winY, nmDuJoueur); // On vérifie s'il y a une victoire à chaque fin de tour.
+        // Ici on calcule les axes de diagonales
+
+        // Droite montante
+        pointeurX = posX;
+        while(pointeurX < 6 && pointeurY > 0){
+            if(board[(pointeurX+1)][(pointeurY-1)] == nmDuJoueur){
+                winDiagX++;
+            } else {
+                break;
+            }
+            pointeurX++;
+            pointeurY--;
+        }
+
+        // Droite Déscendante
+        pointeurY = posY;
+        pointeurX = posX;
+        while(pointeurX > 0 && pointeurY < 5){
+            if(board[(pointeurX-1)][(pointeurY+1)] == nmDuJoueur){
+                winDiagX++;
+            } else {
+                break;
+            }
+            pointeurX--;
+            pointeurY++;
+        }
+
+        // Gauche montante
+        pointeurY = posY;
+        pointeurX = posX;
+        while(pointeurX > 0 && pointeurY > 0){
+            if(board[(pointeurX-1)][(pointeurY-1)] == nmDuJoueur){
+                winDiagY++;
+            } else {
+                break;
+            }
+            pointeurX--;
+            pointeurY--;
+        }
+
+        // Gauche Déscendante
+        pointeurY = posY;
+        pointeurX = posX;
+        while(pointeurX > 6 && pointeurY > 5){
+            if(board[(pointeurX+1)][(pointeurY+1)] == nmDuJoueur){
+                winDiagY++;
+            } else {
+                break;
+            }
+            pointeurX++;
+            pointeurY++;
+        }
+
+        System.out.println("Score de winX : " + winX);
+        System.out.println("Score de winY : " + winY);
+        System.out.println("Score de winDiagX : " + winDiagX);
+        System.out.println("Score de winDiagY : " + winDiagY);
+
+
+
+        youWin(winX, winY, winDiagX, winDiagY, nmDuJoueur); // On vérifie s'il y a une victoire à chaque fin de tour.
 
     }
 
-    public static void youWin(int winX, int winY, int nmDuJoueur){
-        if (winX >= 4 || winY >= 4){
+    public static void youWin(int winX, int winY, int winDiagX, int winDiagy, int nmDuJoueur){
+        if (winX >= 4 || winY >= 4 || winDiagX >= 4 || winDiagy >= 4){
             System.out.println(ANSI_GREEN + ANSI_BLACK + "Félicitations au joueur " + nmDuJoueur + " qui remporte la partie !" + ANSI_RESET);
             System.exit(0);
         }
