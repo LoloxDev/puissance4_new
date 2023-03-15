@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
@@ -16,7 +17,54 @@ public class Main {
      * Plateau de jeu
      */
 
-    static int[][] board=new int[COL_SIZE][ROW_SIZE];
+    static int[][] board=new int[COL_SIZE][ROW_SIZE]; // Ici on déclare nos tableaux pour le jeu.
+
+    static void affichageGrill(){ // Ici, on affiche la grille
+        for(int i = 0; i < ROW_SIZE; i++) //
+        {
+            for(int j = 0; j < COL_SIZE; j++) //
+            {
+                System.out.printf("[%1d]", board[j][i]);
+            }
+            System.out.println();
+        }
+    }
+
+    static String[] initDuJeu() { // Ici, on déclare et on initialise nos joueurs
+        Scanner clavier = new Scanner(System.in);
+        System.out.println("Veuillez saisir le nom du joueur 1");
+        String joueur1 = clavier.next();
+        System.out.println("Veuillez saisir le nom du joueur 2");
+        String joueur2 = clavier.next();
+        String[] joueurs = {joueur1,joueur2};
+
+        return joueurs;
+    }
+
+    static boolean tourDeJeu(String[] joueurs){
+
+        Scanner clavier = new Scanner(System.in);
+        int whoStart = (Math.random() <= 0.5) ? 0 : 1;
+        int whoPlay = whoStart;
+        System.out.println("C'est " + joueurs[whoStart]+ " qui commence");  //<-- ++ opti
+        int tour = whoStart;
+        do{
+            if(tour%2 == 0){
+                System.out.println("C'est le tour du " + joueurs[0]);
+                whoPlay = 1;
+            }else{
+                System.out.println("C'est le tour du " + joueurs[1]);
+                whoPlay = 2;
+            }
+            affichageGrill();
+            tour++;
+            System.out.println("Ou voulez vous placer votre jeu ?");
+            int colonne = clavier.nextInt();
+            placementJeton(colonne, whoPlay);
+
+        }while(tour != 15);
+        return true;
+    }
 
     public static void main(String[] args) {
         //initialisation du jeu
@@ -83,8 +131,8 @@ public class Main {
 
         // Ici on reset les compteurs
         if (!youWin(winX, winY, nmDuJoueur)){
-            winX = 1;
-            winY = 1;
+            //winX == 1;
+            //winY == 1;
         }
 
     }
@@ -105,55 +153,10 @@ public class Main {
 
 
     //
-    static String[] initDuJeu() {
-        Scanner clavier = new Scanner(System.in);
-        System.out.println("Veuillez saisir le nom du joueur 1");
-        String joueur1 = clavier.next();
-        System.out.println("Veuillez saisir le nom du joueur 2");
-        String joueur2 = clavier.next();
-        String[] joueurs = {joueur1,joueur2};
 
-        int whoStart = (Math.random() <= 0.5) ? 1 : 2;
-        System.out.println("C'est " + joueurs[whoStart]+ " qui commence");  //<-- ++ opti
-        return joueurs;
 
-        //switch(whoStart){
-        //case 1:
-        //    System.out.println("C'est " + joueurs[0]+ " qui commence");
-        //    break;
-        //                                                                    //<-- + opti
-        //case 2:
-        //    System.out.println("C'est " + joueurs[1] + "qui commence");
-        //    break;
-        //}
-    }
 
-    static boolean tourDeJeu(String[] joueurs){
-        int tour = 0;
-        do{
-            if(tour%2 == 0){
-                System.out.println("C'est le tour du " + joueurs[0]);
-                affichageGrill();
-                tour++;
-            }else{
-                System.out.println("C'est le tour du " + joueurs[1]);
-                affichageGrill();
-                tour++;
-            }
-        }while(tour != 15);
-        return true;
-    }
-    static void affichageGrill(){
-        int [][]grid = new int[6][7];
-        for(int i = 0; i < 6; i++)
-        {
-            for(int j = 0; j < 7; j++)
-            {
-                System.out.printf("%2d ", grid[i][j]);
-            }
-            System.out.println();
-        }
-    }
+
 
 
 }
