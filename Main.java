@@ -6,23 +6,23 @@ public class Main {
     /**
      * Taille des colonnes du plateau
      */
-    final static int COL_SIZE=7;
+    final static int X_POS=7;
 
     /***
      * Taille des lignes du plateau
      * */
-    final static int ROW_SIZE=6;
+    final static int Y_POS=6;
 
     /**
      * Plateau de jeu
      */
 
-    static int[][] board=new int[COL_SIZE][ROW_SIZE]; // Ici on déclare nos tableaux pour le jeu.
+    static int[][] board=new int[X_POS][Y_POS]; // Ici on déclare nos tableaux pour le jeu.
 
     static void affichageGrill(){ // Ici, on affiche la grille
-        for(int i = 0; i < ROW_SIZE; i++) //
+        for(int i = 0; i < Y_POS; i++) //
         {
-            for(int j = 0; j < COL_SIZE; j++) //
+            for(int j = 0; j < X_POS; j++) //
             {
                 System.out.printf("[%1d]", board[j][i]);
             }
@@ -80,7 +80,7 @@ public class Main {
 
         Object[] placeTrouve = { false , "" };     // <--- Sers à retourner l'index de la case joué, et si une place à été trouvée.
 
-        for (int i=ROW_SIZE-1 ; !(boolean) placeTrouve[0] && i>=0 ; i--){ // On parcours la colonne, pour voir s'il y a une place, si oui, on prends la première, sinon on refuse le placement.
+        for (int i=Y_POS-1 ; !(boolean) placeTrouve[0] && i>=0 ; i--){ // On parcours la colonne, pour voir s'il y a une place, si oui, on prends la première, sinon on refuse le placement.
             if(board[colonne][i] == 0){
                 board[colonne][i] = nmDuJoueur;
                 placeTrouve[1] = i;
@@ -98,42 +98,90 @@ public class Main {
 
     public static void verifVictoire(int posX, int posY, int nmDuJoueur){
 
-        int winX = 1;
+        System.out.println();
+        //int winX = 1;
         int winY = 1;
 
         // Ici on calcule le nombre de points allignés à l'horizontal
-        for(int i=1; i<3; i++){
+        //for(int i=Y_POS-1; i<=0 ; i--){
+            //do{
+//
+            //    if(board[posX][posY+1] == nmDuJoueur){
+            //        winY++;
+            //    }
+//
+            //} while (board[posX][posY+1] >= 0 && winY != 4);
+            System.out.println(winY + "Nombre de wins");
+            System.out.println(nmDuJoueur + "Numéro du joueur");
+            System.out.println(board[posX][posY] + "Numéro du jeton sur la position");
+            System.out.println(board[posX][posY-1] + " Numéro du jeton sur la position du dessus ");
+            do{
 
-            if(board[posY][posX-i] == nmDuJoueur){
-                winX++;
-            }
+                if(board[posX][posY+1] == nmDuJoueur){
+                    winY++;
+                }
 
-            if(board[posY][posY-i] == nmDuJoueur){
-                winX++;
-            }
+                System.out.println(winY + "Nombre de wins");
+            } while (board[posX][posY+1] > 0 && winY != 4);
 
-            youWin(winX, winY, nmDuJoueur);
-        }
+            System.out.println(winY + "Nombre de wins 2eme affichage");
 
-        // Ici on calcule le nombre de points allignés à la vertical
-        for(int i=1; i<3; i++){
 
-            if(board[posY][posX+i] == nmDuJoueur){
-                winX++;
-            }
+            //do{
+//
+            //    if(board[posX][posY+1] == nmDuJoueur){
+            //        winX++;
+            //    }
+//
+            //} while (board[posX][posY+1] >= 0 && winY != 4);
+//
+            //do{
+//
+            //    if(board[posX][posY-1] == nmDuJoueur){
+            //        winX++;
+            //    }
+//
+            //} while (board[posX][posY-1] >= 0 && winY != 4);
 
-            if(board[posY][posY+i] == nmDuJoueur){
-                winX++;
-            }
 
-            youWin(winX, winY, nmDuJoueur);
-        }
+            //System.out.println(winY);
+            //youWin(winX, winY, nmDuJoueur);
+        //}
+
+
+        //for(int i=1; i<3; i++){
+//
+        //    if(board[posY][posX-i] == nmDuJoueur && board[posY][posX-i] >= 0){
+        //        winX++;
+        //    }
+//
+        //    if(board[posY][posY-i] == nmDuJoueur && board[posY][posY-i] >= 0){
+        //        winX++;
+        //    }
+//
+        //    youWin(winX, winY, nmDuJoueur);
+        //}
+//
+        //// Ici on calcule le nombre de points allignés à la vertical
+        //
+        //for(int i=1; i<3; i++){
+//
+        //    if(board[posY][posX+i] == nmDuJoueur && board[posY][posX+i] >= 0){
+        //        winX++;
+        //    }
+//
+        //    if(board[posY][posY+i] == nmDuJoueur && board[posY][posY+i] >= 0){
+        //        winX++;
+        //    }
+//
+        //    youWin(winX, winY, nmDuJoueur);
+        //}
 
         // Ici on reset les compteurs
-        if (!youWin(winX, winY, nmDuJoueur)){
+        //if (!youWin(winX, winY, nmDuJoueur)){
             //winX == 1;
             //winY == 1;
-        }
+        //}
 
     }
 
