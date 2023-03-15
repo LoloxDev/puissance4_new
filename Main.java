@@ -4,6 +4,13 @@ import java.util.Scanner;
 public class Main {
 
     /**
+     * On initialise les couleurs
+     */
+    public static final String ANSI_RESET = "\u001B[32m";
+    public static final String ANSI_GREEN = "\u001B[42m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+
+    /**
      * Taille des colonnes du plateau
      */
     final static int X_POS=7;
@@ -117,26 +124,25 @@ public class Main {
         }
 
         // Puis vers la gauche
-        boucle = true;
 
-        while (posX > 0 && boucle){
+        while (posX > 0){
 
             if(board[(posX-1)][posY] == nmDuJoueur){
                 winX++;
             } else {
-                boucle = false;
+                break; // On peux utiliser break pour éviter la variable boucle.
             }
             posX--;
         }
 
-        youWin(winX, winY, nmDuJoueur);
+        youWin(winX, winY, nmDuJoueur); // On vérifie s'il y a une victoire à chaque fin de tour.
 
     }
 
     public static void youWin(int winX, int winY, int nmDuJoueur){
         if (winX >= 4 || winY >= 4){
-            System.out.println("Félicitations au joueur " + nmDuJoueur + " qui remporte la partie !");
-            //System.exit(0);
+            System.out.println(ANSI_GREEN + ANSI_BLACK + "Félicitations au joueur " + nmDuJoueur + " qui remporte la partie !" + ANSI_RESET);
+            System.exit(0);
         }
     }
 }
