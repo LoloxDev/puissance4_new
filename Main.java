@@ -68,13 +68,14 @@ public class Main {
                 System.out.println("C'est le tour du " + joueurs[1]);
                 whoStart = 2;
             }
-            tour++;
             System.out.println("Ou voulez vous placer votre jeu ?");
-            int colonne = 0;
-            do {
-                colonne = clavier.nextInt();
-            }while(colonne<0&&colonne>6);
-            placementJeton(colonne, whoStart);
+            int colonne = clavier.nextInt();
+            if (colonne > 6 || colonne < 0){
+                System.out.println("veuillez saisir un chiffre entre 0 et 6");
+            }else{
+                placementJeton(colonne, whoStart);
+                tour++;
+            }
 
         }while(tour != 42);
     }
