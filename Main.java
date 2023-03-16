@@ -58,6 +58,7 @@ public class Main {
         Scanner clavier = new Scanner(System.in);
         int whoStart = (Math.random() <= 0.5) ? 0 : 1;
         System.out.println("C'est " + joueurs[whoStart]+ " qui commence");  //<-- ++ opti
+        affichageGrill();
         int tour = whoStart;
         do{
             if(tour%2 == 0){
@@ -67,13 +68,12 @@ public class Main {
                 System.out.println("C'est le tour du " + joueurs[1]);
                 whoStart = 2;
             }
-            affichageGrill();
             tour++;
             System.out.println("Ou voulez vous placer votre jeu ?");
             int colonne = clavier.nextInt();
             placementJeton(colonne, whoStart);
 
-        }while(tour != 15);
+        }while(tour != 42);
     }
 
     public static void main(String[] args) {
@@ -92,13 +92,16 @@ public class Main {
                 board[colonne][i] = nmDuJoueur;
                 placeTrouve[1] = i;
                 placeTrouve[0] = true;
+                affichageGrill();
+                verifVictoire(colonne, (int) placeTrouve[1], nmDuJoueur);
             }
         }
         if(!(boolean) placeTrouve[0]){
             System.out.println("Choisissez une autre colonne, celle ci est pleine !");
-            // Rappeler la fonction, attention à lé récursivité
+            Scanner clavier = new Scanner(System.in);
+            int newColonne = clavier.nextInt();
+            placementJeton(newColonne, nmDuJoueur); // On rapelle la fonction et on utilise une nouvelle saisie pour éviter la récurisivité
         }
-        verifVictoire(colonne, (int) placeTrouve[1], nmDuJoueur);
     }
 
     public static void verifVictoire(int posX, int posY, int nmDuJoueur){
@@ -188,14 +191,16 @@ public class Main {
         // Gauche Déscendante
         pointeurY = posY;
         pointeurX = posX;
-        while(pointeurX > 6 && pointeurY > 5){
-            if(board[(pointeurX+1)][(pointeurY+1)] == nmDuJoueur){
+        int pointeur2Y = posY;
+        int pointeur2X = posX;
+        while(pointeur2X > 6 && pointeur2Y > 5){
+            if(board[(pointeur2X+1)][(pointeur2Y+1)] == nmDuJoueur){
                 winDiagY++;
             } else {
                 break;
             }
-            pointeurX++;
-            pointeurY++;
+            pointeur2X++;
+            pointeur2Y++;
         }
 
         System.out.println("Score de winX : " + winX);
@@ -204,13 +209,12 @@ public class Main {
         System.out.println("Score de winDiagY : " + winDiagY);
 
 
-
-        youWin(winX, winY, winDiagX, winDiagY, nmDuJoueur); // On vérifie s'il y a une victoire à chaque fin de tour.
-
+        youWin(winX, winY, winDiagX, winDiagY, nmDuJoueur);
     }
 
-    public static void youWin(int winX, int winY, int winDiagX, int winDiagy, int nmDuJoueur){
-        if (winX >= 4 || winY >= 4 || winDiagX >= 4 || winDiagy >= 4){
+    // Fonction qui vérifie la victoire, affiche le gagnant et coupe le script.
+    public static void youWin(int winX, int winY, int winDiagX, int winDiagY, int nmDuJoueur){
+        if (winX >= 4 || winY >= 4 || winDiagX >= 4 || winDiagY >= 4){
             System.out.println(ANSI_GREEN + ANSI_BLACK + "Félicitations au joueur " + nmDuJoueur + " qui remporte la partie !" + ANSI_RESET);
             System.exit(0);
         }
