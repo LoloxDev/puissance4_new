@@ -62,10 +62,19 @@ public class Main {
                 whoStart = 2;
             }
             affichageGrill();
-            tour++;
             System.out.println("Ou voulez vous placer votre jeu ?");
             int colonne = clavier.nextInt();
-            placementJeton(colonne, whoStart);
+            if (colonne > 6 || colonne < 0){
+                System.out.println("veuillez saisir un chiffre entre 0 et 6");
+            }else{
+                placementJeton(colonne, whoStart);
+                tour++;
+            }
+
+
+
+
+
 
         }while(tour != 15);
     }
