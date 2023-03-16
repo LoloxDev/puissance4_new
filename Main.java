@@ -70,7 +70,10 @@ public class Main {
             }
             tour++;
             System.out.println("Ou voulez vous placer votre jeu ?");
-            int colonne = clavier.nextInt();
+            int colonne = 0;
+            do {
+                colonne = clavier.nextInt();
+            }while(colonne<0&&colonne>6);
             placementJeton(colonne, whoStart);
 
         }while(tour != 42);
@@ -189,11 +192,9 @@ public class Main {
         }
 
         // Gauche Déscendante
-        pointeurY = posY;
-        pointeurX = posX;
         int pointeur2Y = posY;
         int pointeur2X = posX;
-        while(pointeur2X > 6 && pointeur2Y > 5){
+        while(pointeur2X < 6 && pointeur2Y < 5){
             if(board[(pointeur2X+1)][(pointeur2Y+1)] == nmDuJoueur){
                 winDiagY++;
             } else {
