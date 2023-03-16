@@ -24,11 +24,18 @@ public class Main {
         {
             for(int j = 0; j < X_POS; j++) //
             {
-                System.out.printf("[%1d]", board[j][i]);
+                if(board[j][i] == 0){
+                    System.out.printf("|%1s|", "-");
+                }else if(board[j][i] == 1){
+                    System.out.printf("|%1s|", "\u001B[33m"+"O"+"\u001B[0m");
+                }else{
+                    System.out.printf("|%1s|","\u001B[31m"+"X"+"\u001B[0m");
+                }
             }
             System.out.println();
         }
     }
+
 
     static String[] initDuJeu() { // Ici, on déclare et on initialise nos joueurs
         Scanner clavier = new Scanner(System.in);
