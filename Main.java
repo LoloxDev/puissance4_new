@@ -73,7 +73,7 @@ public class Main {
             if (colonne > 6 || colonne < 0){
                 System.out.println("veuillez saisir un chiffre entre 0 et 6");
             }else{
-                placementJeton(colonne, whoStart);
+                placementJeton(colonne, whoStart, joueurs);
                 tour++;
             }
 
@@ -87,7 +87,7 @@ public class Main {
 
     }
 
-    public static void placementJeton(int colonne, int nmDuJoueur){
+    public static void placementJeton(int colonne, int nmDuJoueur, String[] joueurs){
 
         Object[] placeTrouve = { false , "" };     // <--- Sers à retourner l'index de la case joué, et si une place à été trouvée.
 
@@ -97,18 +97,18 @@ public class Main {
                 placeTrouve[1] = i;
                 placeTrouve[0] = true;
                 affichageGrill();
-                verifVictoire(colonne, (int) placeTrouve[1], nmDuJoueur);
+                verifVictoire(colonne, (int) placeTrouve[1], nmDuJoueur, joueurs);
             }
         }
         if(!(boolean) placeTrouve[0]){
             System.out.println("Choisissez une autre colonne, celle ci est pleine !");
             Scanner clavier = new Scanner(System.in);
             int newColonne = clavier.nextInt();
-            placementJeton(newColonne, nmDuJoueur); // On rapelle la fonction et on utilise une nouvelle saisie pour éviter la récurisivité
+            placementJeton(newColonne, nmDuJoueur, joueurs); // On rapelle la fonction et on utilise une nouvelle saisie pour éviter la récurisivité
         }
     }
 
-    public static void verifVictoire(int posX, int posY, int nmDuJoueur){
+    public static void verifVictoire(int posX, int posY, int nmDuJoueur, String[] joueurs){
 
 
 
@@ -211,13 +211,19 @@ public class Main {
         System.out.println("Score de winDiagY : " + winDiagY);
 
 
-        youWin(winX, winY, winDiagX, winDiagY, nmDuJoueur);
+        youWin(winX, winY, winDiagX, winDiagY, nmDuJoueur, joueurs);
     }
 
     // Fonction qui vérifie la victoire, affiche le gagnant et coupe le script.
-    public static void youWin(int winX, int winY, int winDiagX, int winDiagY, int nmDuJoueur){
+    public static void youWin(int winX, int winY, int winDiagX, int winDiagY, int nmDuJoueur, String[] joueurs){
+        String gagnant = "";
+        if(nmDuJoueur == 1){
+            gagnant = joueurs[0];
+        } else {
+            gagnant = joueurs[1];
+        }
         if (winX >= 4 || winY >= 4 || winDiagX >= 4 || winDiagY >= 4){
-            System.out.println(ANSI_GREEN + ANSI_BLACK + "Félicitations au joueur " + nmDuJoueur + " qui remporte la partie !" + ANSI_RESET);
+            System.out.println(ANSI_GREEN + ANSI_BLACK + "Félicitations à " + gagnant + " qui remporte la partie !" + ANSI_RESET);
             System.exit(0);
         }
     }
